@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TimeActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:elevation="4dp"
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CountDown"
+            android:id="@+id/txtTimer"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout4"
+        android:layout_marginTop="40dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FINALIZAR"
+            android:id="@+id/btnFim"
+            android:layout_alignTop="@+id/btnRenovar"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1"
+            android:id="@+id/btnRenovar"
+            android:onClick="addClick"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/btnFim"
+            android:layout_alignEnd="@+id/btnFim"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/listView"
+        android:layout_marginTop="10dp">
+
+    </fragment>
+
+</LinearLayout>

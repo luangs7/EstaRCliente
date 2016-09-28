@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:weightSum="1"
+        android:background="#f4f5f6">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="ALERTA"
+            android:textColor="#09398d"
+            android:textSize="17dp"
+            android:layout_weight="1.00"
+            android:gravity="center"
+            android:layout_margin="7dp"
+            android:id="@+id/dialogTitle" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:background="#FFFFFF">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CONFIRMAR"
+                android:textColor="#ffffff"
+                android:id="@+id/btncloseDialog"
+                android:background="@drawable/button_rounded"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/linearLayout2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:id="@+id/linearLayout2"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+
+                <CheckBox
+                    android:layout_width="227dp"
+                    android:layout_height="wrap_content"
+                    android:text="10 minutos antes"
+                    android:id="@+id/checkBox15"
+                    android:checked="false"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="15dp" />
+
+                <CheckBox
+                    android:layout_width="227dp"
+                    android:layout_height="wrap_content"
+                    android:text=" 5 minutos antes "
+                    android:id="@+id/checkBox5"
+                    android:checked="false"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="15dp" />
+
+                <CheckBox
+                    android:layout_width="227dp"
+                    android:layout_height="wrap_content"
+                    android:text="Não receber"
+                    android:id="@+id/checkBoxNot"
+                    android:checked="false"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center_horizontal" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

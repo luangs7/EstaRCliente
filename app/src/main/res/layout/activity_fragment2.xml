@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/relativeLayout2"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Seu saldo atual é de:"
+            android:id="@+id/textView16"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="56dp"
+            android:layout_marginStart="56dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="8 horas"
+            android:id="@+id/txtSaldo"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/textView16"
+            android:layout_toEndOf="@+id/textView16"
+            android:layout_marginLeft="5dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout3"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Selecione qual deseja comprar"
+            android:id="@+id/textView18"
+            android:layout_marginBottom="10dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardsimple"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:cardCornerRadius="2dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="R$2,00"
+                android:id="@+id/textView"
+                android:layout_alignBottom="@+id/buySimple"
+                android:layout_toLeftOf="@+id/buySimple"
+                android:layout_toStartOf="@+id/buySimple"
+                android:layout_marginRight="65dp"
+                android:layout_marginEnd="65dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="1 hora"
+                android:id="@+id/txt9ds"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=">"
+                android:id="@+id/textView12323"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txt9ds"
+                android:layout_toEndOf="@+id/txt9ds"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buySimple"
+                android:src="@drawable/coins"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp" />
+
+        </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardmedium"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:cardCornerRadius="2dp"
+            android:layout_marginTop="38dp"
+            android:layout_below="@+id/card_view"
+            android:layout_alignLeft="@+id/card_view"
+            android:layout_alignStart="@+id/card_view">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="5 horas"
+                android:id="@+id/txt9"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="33dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=">"
+                android:id="@+id/textView12"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txt9"
+                android:layout_toEndOf="@+id/txt9"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="R$10,00"
+                android:id="@+id/textView3434"
+                android:layout_alignBottom="@+id/buyMiddle"
+                android:layout_toLeftOf="@+id/buyMiddle"
+                android:layout_toStartOf="@+id/buyMiddle"
+                android:layout_marginRight="65dp"
+                android:layout_marginEnd="65dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/buyMiddle"
+                android:src="@drawable/coinsmiddle"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp" />
+        </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardhigh"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:cardCornerRadius="2dp"
+            android:layout_marginTop="38dp"
+            android:layout_below="@+id/cardmedium"
+            android:layout_alignLeft="@+id/card_view2"
+            android:layout_alignStart="@+id/card_view2">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="10 horas"
+                    android:id="@+id/txt9444"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="33dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text=">"
+                    android:id="@+id/textView1242"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/txt9444"
+                    android:layout_toEndOf="@+id/txt9444"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="R$20,00"
+                    android:id="@+id/txtdsd"
+                    android:layout_alignBottom="@+id/buyUlt"
+                    android:layout_toLeftOf="@+id/buyUlt"
+                    android:layout_toStartOf="@+id/buyUlt"
+                    android:layout_marginRight="65dp"
+                    android:layout_marginEnd="65dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buyUlt"
+                    android:src="@drawable/coinsult"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="15dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

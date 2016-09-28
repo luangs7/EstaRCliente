@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#218328</color>
+    <color name="colorPrimaryDark">#d6047b0c</color>
+    <color name="colorAccent">#c2c3c4</color>
+    <color name="timer_circle">#2ebfca</color>
+    <color name="white">#ffffff</color>
+    <color name="background">#f4f5f6</color>
+    <color name="backgroundcard">#fafafa</color>
+    <color name="toolbar">#3b64af</color>
+    <color name="backgroundtitle">#0d000000</color>
+    <color name="botaoPressed">#800E3F67</color>
+    <color name="botaomain">#3b64af</color>
+    <color name="secondary_text">#727272</color>
+    <color name="secondary_text_transparent_70">#B3727272</color>
+    <color name="primary_text">#212121</color>
+    <color name="chrome_grey">#F2F2F2</color>
+    <color name="trans_black_75">#BF000000</color>
+    <color name="trans_black_50">#80000000</color>
+    <color name="trans_black_25">#40000000</color>
+    <color name="textcolor">#595e5f</color>
+    <color name="linecolor">#b9b9b9</color>
+
+    <color name="hintbackalfa">#42000000</color>
+    <color name="cardrelative">#f4f5f6</color>
+    <color name="error_color">#E7492E</color>
+</resources>

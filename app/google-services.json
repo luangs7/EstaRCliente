@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "941025966805",
+    "project_id": "firebase-estarcliente"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941025966805:android:69dcfe287a0300c3",
+        "android_client_info": {
+          "package_name": "br.com.tads.estarcliente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941025966805-92u7jgk51qbal4hs0hd3vr9fhl1qgqse.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.tads.estarcliente",
+            "certificate_hash": "17771A51FC2D83EABC19502275E9D976B20FBC18"
+          }
+        },
+        {
+          "client_id": "941025966805-pofa5ddc6cas83oqa50th3rs992qg2or.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1MKsas4erk9ni8Av7LXai3vvM0WJRwtU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
