@@ -5,6 +5,8 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,17 +37,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import br.com.tads.estarcliente.alarm.CountDown;
 import br.com.tads.estarcliente.alarm.CountDownBehavior;
 import br.com.tads.estarcliente.alarm.NotifyService;
+import br.com.tads.estarcliente.alarm.TimerJobSchedulerService;
+import br.com.tads.estarcliente.alarm.TimerService;
 import br.com.tads.estarcliente.dao.local.LocalDbImplement;
 import br.com.tads.estarcliente.dao.voley.CallListener;
 import br.com.tads.estarcliente.dao.voley.OnDialogButtonClick;
 import br.com.tads.estarcliente.dao.webservice.BaseDao;
 import br.com.tads.estarcliente.model.Estar;
+import br.com.tads.estarcliente.model.Timer;
 import br.com.tads.estarcliente.model.Usuario;
 import br.com.tads.estarcliente.model.request.EstarRequest;
 
@@ -55,20 +61,21 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     Toolbar toolbar;
     private TextView textView;
     private CountDown countDown;
-    NotificationCompat.Builder mBuilder;
+    private NotificationCompat.Builder mBuilder;
     int mNotificationId = 001;
-    NotificationManager mNotifyMgr;
-    AlarmManager alarmManager;
+    private NotificationManager mNotifyMgr;
+    private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
-    Estar estar;
     Button btnRenovar,btnFim;
 
     //    Atributos do tempo
-    public static long TIME = 1*60;
+    public static long TIME = 0;
     public static long ALARM = 0;
     public static Date dateclose;
     public static long MILLIS;
     public static long secondsLeft;
+    Timer timer;
+    Estar estar;
 
 //    for maps
     private GoogleMap mMap;
@@ -76,12 +83,13 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleApiClient mGoogleApiClient;
     Location lastLocation;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent it = getIntent();
         if(it.hasExtra("estar")){
             estar = (Estar) it.getSerializableExtra("estar");
-            TIME = estar.getHoras() * 60;
+            //TIME = estar.getHoras() * 60;
             ALARM = estar.getAlert();
             Log.e("values",String.valueOf(TIME)+ " / " +String.valueOf(ALARM) );
         }else{
@@ -107,38 +115,66 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
             btnRenovar.setVisibility(View.INVISIBLE);
         }
 
-        createNotification();
+        timer = new LocalDbImplement<Timer>(TimeActivity.this).getDefault(Timer.class);
 
+        TIME = getDateDifference(timer.getDateFinish());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // wrap your stuff in a componentName
+            ComponentName mServiceComponent = new ComponentName(this, TimerJobSchedulerService.class);
+            // set up conditions for the job
+            android.app.job.JobInfo.Builder builder = new android.app.job.JobInfo.Builder(1, mServiceComponent);
+
+            android.app.job.JobInfo task = builder.setRequiredNetworkType(android.app.job.JobInfo.NETWORK_TYPE_UNMETERED)
+                    .setOverrideDeadline(100)
+                    .setPersisted(true)
+                    .build();
+            // inform the system of the job
+            android.app.job.JobScheduler jobScheduler = (android.app.job.JobScheduler) this.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+            jobScheduler.schedule(task);
+
+        }else{
+            startService(new Intent(this, TimerService.class));
+        }
+
+
+
+
+
+
+
+//        createNotification();
+//
         //Cria o contador com 1 minuto
         countDown = new CountDown(TIME);
 
         //Cria e atribui um CountDownBehavior ao contador
-        countDown.setCountDownListener(new CountDownBehavior(ALARM, "mm:ss") {
+        countDown.setCountDownListener(new CountDownBehavior(0, "mm:ss") {
             @Override
             public void onEnd() {
-                mBuilder.mActions.clear();
-                mBuilder.setOngoing(false);
-                mBuilder.setContentText("Seu tempo acabou.");
-                mNotifyMgr.notify(mNotificationId, mBuilder.build());
+//                mBuilder.mActions.clear();
+//                mBuilder.setOngoing(false);
+//                mBuilder.setContentText("Seu tempo acabou.");
+//                mNotifyMgr.notify(mNotificationId, mBuilder.build());
                 //mNotifyMgr.cancel(mNotificationId);
             }
 
             @Override
             protected void onAlarm() {
-                alarmMethodwithCount();
+                //alarmMethodwithCount();
             }
 
             @Override
             protected void displayTimeLeft(String timeLeft) {
-                mBuilder.setContentText(timeLeft + " restante");
-                mNotifyMgr.notify(mNotificationId, mBuilder.build());
+//                mBuilder.setContentText(timeLeft + " restante");
+//                mNotifyMgr.notify(mNotificationId, mBuilder.build());
                 textView.setText(timeLeft);
             }
         });
 
-        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+//        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         countDown.start();
-        alarmMethod();
+//        alarmMethod();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -155,11 +191,13 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     protected void addClick(View v){
+        if(secondsLeft == 0){
+            TIME = 1*60;
+            countDown.start();
+        }
         btnRenovar.setVisibility(View.INVISIBLE);
-        secondsLeft = countDown.increaseBy(65);
-        alarmManager.cancel(pendingIntent);
-        pendingIntent.cancel();
-
+        countDown.increaseBy(60);
+        TimerJobSchedulerService.addIncrease();
         getdata(estar);
 
 
@@ -169,24 +207,13 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onDestroy() {
 
-        mNotifyMgr.cancel(mNotificationId);
+        //mNotifyMgr.cancel(mNotificationId);
         super.onDestroy();
     }
 
 
     @Override
     protected void onStop() {
-        new AlertDialog.Builder(this)
-                .setTitle("Confirmar")
-                .setMessage("Se você fechar o app, algumas funções podem não funcionar corretamente.")
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dialog.dismiss();
-                    }});
-
-
         super.onStop();
     }
 
@@ -224,53 +251,6 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
 
-    private void alarmMethod(){
-
-        Intent myIntent = new Intent(this , NotifyService.class);
-        pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
-
-        Date data = new Date();
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.setTime(data);
-
-        Integer seconds = (int) (long) TIME;
-        seconds = (seconds / 60);
-
-        calendar.add(Calendar.MINUTE,seconds);
-
-        MILLIS  = calendar.getTimeInMillis() - (ALARM * 1000);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, MILLIS, pendingIntent);
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, MILLIS, pendingIntent);
-        else
-            alarmManager.set(AlarmManager.RTC_WAKEUP, MILLIS, pendingIntent);
-
-        //Toast.makeText(MainActivity.this, "Alarme programado", Toast.LENGTH_LONG).show();
-    }
-
-    private void alarmMethodwithCount(){
-        Intent myIntent = new Intent(this , NotifyService.class);
-        pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
-
-        Date data = new Date();
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.setTime(data);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-           alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        else
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-//        Toast.makeText(MainActivity.this, "Start Alarm2", Toast.LENGTH_LONG).show();
-    }
 
 
     @Override
@@ -298,12 +278,11 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(EstarRequest request) {
                 super.onResponse(request);
                 if (request.success()) {
-                    TIME = secondsLeft + (1*60);
-                    if(secondsLeft == 0){
-                        TIME = 1*60;
-                        countDown.start();
-                    }
-                    alarmMethod();
+//                    TIME = secondsLeft + (1*60);
+//                    if(secondsLeft == 0){
+//                        TIME = 1*60;
+//                        countDown.start();
+//                    }
 
                     Usuario usuario = new LocalDbImplement<Usuario>(TimeActivity.this).getDefault(Usuario.class);
                     new LocalDbImplement<Usuario>(TimeActivity.this).clearObject(Usuario.class);
@@ -314,7 +293,6 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 }else{
-                    alarmMethod();
                     Toast.makeText(TimeActivity.this, request.getException(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -358,7 +336,6 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .getLastLocation(mGoogleApiClient);
         }
 
-        // Add a marker in Sydney and move the camera
         if(estar != null) {
             LatLng location = new LatLng(estar.getLatitude(), estar.getLongitude());
             mMap.setMyLocationEnabled(true);
@@ -398,5 +375,45 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         callConnection();
+    }
+
+
+    public long getDateDifference(String finishDate) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String actualDate = dateFormat.format(Calendar.getInstance().getTime());
+
+        try {
+            Date dateFinish = dateFormat.parse(finishDate);
+
+            Date currentDate = dateFormat.parse(actualDate);
+
+            long diff = dateFinish.getTime() - currentDate.getTime();
+
+            long days = diff / (24 * 60 * 60 * 1000);
+            diff -= days * (24 * 60 * 60 * 1000);
+
+            long hours = diff / (60 * 60 * 1000);
+            diff -= hours * (60 * 60 * 1000);
+
+            long minutes = diff / (60 * 1000);
+            diff -= minutes * (60 * 1000);
+
+            long seconds = diff / 1000;
+
+            seconds = seconds + 60*minutes;
+
+
+            return  seconds;
+
+//            counterDaysTV.setText(days + "");
+//            counterMinsTV.setText(minutes + "");
+//            counterHoursTV.setText(hours + "");
+//            counterSecTV.setText(seconds + "");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

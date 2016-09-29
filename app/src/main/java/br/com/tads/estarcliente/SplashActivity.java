@@ -30,12 +30,16 @@ public class SplashActivity extends AppCompatActivity {
                 ContextCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this,
-                        android.Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        android.Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{
                             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             android.Manifest.permission.READ_EXTERNAL_STORAGE,
                             android.Manifest.permission.ACCESS_FINE_LOCATION,
-                            android.Manifest.permission.ACCESS_NETWORK_STATE},
+                            android.Manifest.permission.ACCESS_NETWORK_STATE,
+                            android.Manifest.permission.READ_PHONE_STATE
+            },
                     REQUEST_PERMISSIONS_CODE);
         } else {
             open();
@@ -89,6 +93,11 @@ public class SplashActivity extends AppCompatActivity {
                         finishAffinity();
                         return;
                     } else if (permissions[i].equalsIgnoreCase(Manifest.permission.ACCESS_NETWORK_STATE)
+                            && grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                        Toast.makeText(this, "Favor habilitar a permissão para usar o aplicativo!", Toast.LENGTH_LONG).show();
+                        finishAffinity();
+                        return;
+                    }else if (permissions[i].equalsIgnoreCase(Manifest.permission.READ_PHONE_STATE)
                             && grantResults[i] == PackageManager.PERMISSION_DENIED) {
                         Toast.makeText(this, "Favor habilitar a permissão para usar o aplicativo!", Toast.LENGTH_LONG).show();
                         finishAffinity();

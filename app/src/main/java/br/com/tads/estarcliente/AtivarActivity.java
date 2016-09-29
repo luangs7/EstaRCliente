@@ -47,7 +47,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,6 +61,7 @@ import br.com.tads.estarcliente.dao.voley.CallListener;
 import br.com.tads.estarcliente.dao.voley.OnDialogButtonClick;
 import br.com.tads.estarcliente.dao.webservice.BaseDao;
 import br.com.tads.estarcliente.model.Estar;
+import br.com.tads.estarcliente.model.Timer;
 import br.com.tads.estarcliente.model.Usuario;
 import br.com.tads.estarcliente.model.Veiculo;
 import br.com.tads.estarcliente.model.request.BaseRequest;
@@ -392,6 +395,17 @@ public class AtivarActivity extends AppCompatActivity  implements GoogleApiClien
 
                     estar.setId(request.getId());
                     Intent it = new Intent(getBaseContext(),TimeActivity.class);
+
+                    String date = "";
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    try {
+                        date = df.format(Calendar.getInstance().getTime());
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+
+                    new LocalDbImplement<Timer>(AtivarActivity.this).save(new Timer(estar.getHoras(),date));
+
                     it.putExtra("estar",estar);
                     startActivity(it);
 

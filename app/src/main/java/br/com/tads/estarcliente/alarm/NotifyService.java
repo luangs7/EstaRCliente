@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 
 import br.com.tads.estarcliente.MainActivity;
 import br.com.tads.estarcliente.R;
+import br.com.tads.estarcliente.TimeActivity;
 
 /**
  * Created by Dev_Maker on 12/04/2016.
@@ -40,10 +41,10 @@ public class NotifyService extends Service {
     public void qualquer(){ Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationManager mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        Intent intent1 = new Intent(this.getApplicationContext(), MainActivity.class);
+        Intent intent1 = new Intent(this.getApplicationContext(), TimeActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent1, 0);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, TimeActivity.class);
         intent.putExtra("notificacao", 1000);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
