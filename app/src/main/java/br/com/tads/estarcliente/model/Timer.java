@@ -133,6 +133,7 @@ public class Timer {
          cal.add(Calendar.MINUTE, 1);
          String newTime = df.format(cal.getTime());
          this.dateFinish = newTime;
+         setSecondsTofinish(this.secondsTofinish + 60);
      }catch (Exception e){
          Log.e("parsedate",e.getMessage());
      }

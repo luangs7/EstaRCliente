@@ -110,8 +110,8 @@ public class AtivarActivity extends AppCompatActivity  implements GoogleApiClien
         editAlerta.setEnabled(false);
 
         List<String> veiculos = new ArrayList<>();
-        veiculos.add("1 hora");
-        veiculos.add("2 horas");
+        veiculos.add("2 minutos");
+        veiculos.add("3 minutos");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, veiculos);
@@ -148,14 +148,14 @@ public class AtivarActivity extends AppCompatActivity  implements GoogleApiClien
                             if (check15.isChecked()) {
                                 check5.setChecked(false);
                                 checknever.setChecked(false);
-                                option = "10 minutos antes.";
-                                alert = 10;
+                                option = "15 minutos antes.";
+                                alert = 15;
                             }
                             if (check5.isChecked()) {
                                 check15.setChecked(false);
                                 checknever.setChecked(false);
-                                option = "5 minutos antes.";
-                                alert = 5;
+                                option = "10 minutos antes.";
+                                alert = 10;
                             }
                             if (checknever.isChecked()) {
                                 check5.setChecked(false);
@@ -228,7 +228,7 @@ public class AtivarActivity extends AppCompatActivity  implements GoogleApiClien
 
                     }else {
                         btnAtivar.setEnabled(false);
-                        Toast.makeText(AtivarActivity.this, "Sem veículos cadastrados!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AtivarActivity.this, "Sem veículos cadastrados! Cadastre ao menos 1 para continuar.", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(AtivarActivity.this, request.getException(), Toast.LENGTH_SHORT).show();
@@ -387,6 +387,8 @@ public class AtivarActivity extends AppCompatActivity  implements GoogleApiClien
             public void onResponse(EstarRequest request) {
                 super.onResponse(request);
                 if (request.success()) {
+                    new LocalDbImplement<Estar>(AtivarActivity.this).clearObject(Estar.class);
+
                     Usuario usuario = new LocalDbImplement<Usuario>(AtivarActivity.this).getDefault(Usuario.class);
                     new LocalDbImplement<Usuario>(AtivarActivity.this).clearObject(Usuario.class);
                     usuario.setSaldo(usuario.getSaldo(),estar.getHoras());
@@ -405,6 +407,7 @@ public class AtivarActivity extends AppCompatActivity  implements GoogleApiClien
                     }
 
                     new LocalDbImplement<Timer>(AtivarActivity.this).save(new Timer(estar.getHoras(),date));
+                    new LocalDbImplement<Estar>(AtivarActivity.this).save(estar);
 
                     it.putExtra("estar",estar);
                     startActivity(it);

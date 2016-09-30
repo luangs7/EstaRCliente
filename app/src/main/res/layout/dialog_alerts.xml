@@ -68,7 +68,7 @@
                 <CheckBox
                     android:layout_width="227dp"
                     android:layout_height="wrap_content"
-                    android:text="10 minutos antes"
+                    android:text="15 segundos antes"
                     android:id="@+id/checkBox15"
                     android:checked="false"
                     android:layout_gravity="center_horizontal"
@@ -78,7 +78,7 @@
                 <CheckBox
                     android:layout_width="227dp"
                     android:layout_height="wrap_content"
-                    android:text=" 5 minutos antes "
+                    android:text=" 10 segundos antes "
                     android:id="@+id/checkBox5"
                     android:checked="false"
                     android:layout_gravity="center_horizontal"

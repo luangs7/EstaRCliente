@@ -77,7 +77,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     Timer timer;
     Estar estar;
 
-//    for maps
+    //    for maps
     private GoogleMap mMap;
     public static final int  REQUEST_PERMISSIONS_CODE = 128;
     private GoogleApiClient mGoogleApiClient;
@@ -87,13 +87,13 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent it = getIntent();
-        if(it.hasExtra("estar")){
-            estar = (Estar) it.getSerializableExtra("estar");
+        estar =  new LocalDbImplement<Estar>(TimeActivity.this).getDefault(Estar.class);
+        if(estar != null){
             //TIME = estar.getHoras() * 60;
             ALARM = estar.getAlert();
             Log.e("values",String.valueOf(TIME)+ " / " +String.valueOf(ALARM) );
         }else{
-            finish();
+            finishAffinity();
         }
 
         super.onCreate(savedInstanceState);
@@ -103,7 +103,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (toolbar != null) {
             toolbar.setTitle("Tempo de EstaR");
             toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-           // toolbar.setNavigationIcon(R.drawable.ic_action_name);
+            // toolbar.setNavigationIcon(R.drawable.ic_action_name);
             setSupportActionBar(toolbar);
         }
 
@@ -111,13 +111,34 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnFim = (Button) findViewById(R.id.btnFim);
         textView = (TextView)findViewById(R.id.txtTimer);
 
-        if(estar.getHoras() == 2){
-            btnRenovar.setVisibility(View.INVISIBLE);
-        }
-
         timer = new LocalDbImplement<Timer>(TimeActivity.this).getDefault(Timer.class);
 
+
+        try {
+            if (estar.getHoras() == 2) {
+                btnRenovar.setVisibility(View.INVISIBLE);
+            }
+            if(timer.getSecondsTofinish() > 160){
+                btnRenovar.setVisibility(View.INVISIBLE);
+            }
+        }catch (Exception e){
+            if(timer.getSecondsTofinish() > 160){
+                btnRenovar.setVisibility(View.INVISIBLE);
+            }
+        }
+
+
+
         TIME = getDateDifference(timer.getDateFinish());
+        if(TIME < 0){
+            TIME = 0;
+            countDown = new CountDown(TIME);
+            Log.e("timer1",String.valueOf(TIME));
+        }else{
+            countDown = new CountDown(TIME);
+            Log.e("timer2",String.valueOf(TIME));
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // wrap your stuff in a componentName
@@ -185,6 +206,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnFim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TimerJobSchedulerService.finish();
                 startActivity(new Intent(getBaseContext(),MainActivity.class));
             }
         });

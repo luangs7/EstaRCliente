@@ -48,7 +48,7 @@ public class Fragment2 extends Fragment {
             public void onClick(View v) {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Confirmar")
-                        .setMessage("Deseja confirmar a compra de R$2,00?")
+                        .setMessage("Deseja confirmar a compra de \n R$2,00?")
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -64,7 +64,7 @@ public class Fragment2 extends Fragment {
             public void onClick(View v) {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Confirmar")
-                        .setMessage("Deseja confirmar a compra de R$10,00?")
+                        .setMessage("Deseja confirmar a compra de \n R$10,00?")
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -80,7 +80,7 @@ public class Fragment2 extends Fragment {
             public void onClick(View v) {
                 new AlertDialog.Builder(getContext())
                         .setTitle("Confirmar")
-                        .setMessage("Deseja confirmar a compra de R$20,00?")
+                        .setMessage("Deseja confirmar a compra de \n R$20,00?")
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

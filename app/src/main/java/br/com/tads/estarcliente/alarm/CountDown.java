@@ -47,6 +47,10 @@ public class CountDown {
         handler.sendMessage(handler.obtainMessage(MSG));
     }
 
+    public void finish(){
+        listener.onEnd();
+    }
+
     //Pára a contagem.
     public synchronized void stop(){
         if(!isCounting){

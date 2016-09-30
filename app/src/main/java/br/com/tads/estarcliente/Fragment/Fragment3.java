@@ -64,8 +64,8 @@ public class Fragment3 extends Fragment {
         tipoVeiculo = (Spinner) view.findViewById(R.id.spinnerVeiculo);
         addVeiculo = (Button) view.findViewById(R.id.buttonAdd);
         listVeiculos = (ListView) view.findViewById(R.id.listVeiculos);
-        editPlaca = (EditText) view.findViewById(R.id.editTextModelo);
-        editModelo = (EditText) view.findViewById(R.id.editTextPlacas);
+        editPlaca = (EditText) view.findViewById(R.id.editTextPlacas);
+        editModelo = (EditText) view.findViewById(R.id.editTextModelo);
 
 
 

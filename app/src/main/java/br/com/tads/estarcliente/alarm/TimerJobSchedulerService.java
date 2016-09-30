@@ -7,15 +7,18 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.tads.estarcliente.R;
 import br.com.tads.estarcliente.TimeActivity;
 import br.com.tads.estarcliente.dao.local.LocalDbImplement;
 import br.com.tads.estarcliente.model.Timer;
@@ -28,7 +31,7 @@ public class TimerJobSchedulerService extends JobService {
     static Context context;
     private static CountDown countDown;
     private static NotificationCompat.Builder mBuilder;
-    int mNotificationId = 001;
+    static int mNotificationId = 001;
     private static NotificationManager mNotifyMgr;
     private static AlarmManager alarmManager;
     private static PendingIntent pendingIntent;
@@ -49,7 +52,11 @@ public class TimerJobSchedulerService extends JobService {
 
         try {
             TIME = getDateDifference(timer.getDateFinish());
-            countDown = new CountDown(TIME);
+            if(TIME < 0){
+                countDown = new CountDown(0);
+            }else {
+                countDown = new CountDown(TIME);
+            }
             alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
             createNotification();
             countDown.start();
@@ -135,8 +142,9 @@ public class TimerJobSchedulerService extends JobService {
 
         mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(android.R.drawable.ic_lock_power_off)
+                        .setSmallIcon(R.drawable.traffic_sign)
                         .setContentTitle("EstaR")
+                        .setColor(Color.parseColor("#218328"))
 //                        .setContentText("1 minuto restante")
 //                        .addAction(android.R.drawable.btn_plus,"Renovar",pendingIntentYes)
 //                        .addAction(android.R.drawable.ic_menu_close_clear_cancel,"Cancelar",null)
@@ -156,11 +164,12 @@ public class TimerJobSchedulerService extends JobService {
 
 
     public static void addIncrease(){
+
         if(secondsLeft == 0){
             TIME = 1*60;
             countDown.start();
         }else{
-            secondsLeft = countDown.increaseBy(60);
+            secondsLeft = secondsLeft + countDown.increaseBy(60);
         }
 
         new LocalDbImplement<Timer>(context).clearObject(Timer.class);
@@ -212,6 +221,12 @@ public class TimerJobSchedulerService extends JobService {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    public static void finish(){
+        countDown.stop();
+        countDown.finish();
+        mNotifyMgr.cancelAll();
     }
 
 }
