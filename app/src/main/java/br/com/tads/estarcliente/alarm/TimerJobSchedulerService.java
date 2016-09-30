@@ -21,6 +21,7 @@ import java.util.Date;
 import br.com.tads.estarcliente.R;
 import br.com.tads.estarcliente.TimeActivity;
 import br.com.tads.estarcliente.dao.local.LocalDbImplement;
+import br.com.tads.estarcliente.model.Estar;
 import br.com.tads.estarcliente.model.Timer;
 
 
@@ -164,13 +165,17 @@ public class TimerJobSchedulerService extends JobService {
 
 
     public static void addIncrease(){
+       try {
+           mNotifyMgr.cancelAll();
+           if (secondsLeft == 0) {
+               TIME = 1 * 60;
+               countDown.start();
+           } else {
+               secondsLeft = secondsLeft + countDown.increaseBy(60);
+           }
+       }catch (Exception e){
 
-        if(secondsLeft == 0){
-            TIME = 1*60;
-            countDown.start();
-        }else{
-            secondsLeft = secondsLeft + countDown.increaseBy(60);
-        }
+       }
 
         new LocalDbImplement<Timer>(context).clearObject(Timer.class);
 
@@ -224,6 +229,8 @@ public class TimerJobSchedulerService extends JobService {
     }
 
     public static void finish(){
+        new LocalDbImplement<Estar>(context).clearObject(Estar.class);
+
         countDown.stop();
         countDown.finish();
         mNotifyMgr.cancelAll();

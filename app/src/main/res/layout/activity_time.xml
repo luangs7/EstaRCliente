@@ -54,7 +54,6 @@
             android:layout_height="wrap_content"
             android:text="+1"
             android:id="@+id/btnRenovar"
-            android:onClick="addClick"
             android:layout_centerVertical="true"
             android:layout_alignRight="@+id/btnFim"
             android:layout_alignEnd="@+id/btnFim"

@@ -210,6 +210,21 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(new Intent(getBaseContext(),MainActivity.class));
             }
         });
+
+
+        btnRenovar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(secondsLeft == 0){
+                    TIME = 1*60;
+                    countDown.start();
+                }
+                btnRenovar.setVisibility(View.INVISIBLE);
+                countDown.increaseBy(60);
+                TimerJobSchedulerService.addIncrease();
+                getdata(estar);
+            }
+        });
     }
 
     protected void addClick(View v){
@@ -221,8 +236,6 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         countDown.increaseBy(60);
         TimerJobSchedulerService.addIncrease();
         getdata(estar);
-
-
     }
 
 

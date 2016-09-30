@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import br.com.tads.estarcliente.dao.local.LocalDbImplement;
+import br.com.tads.estarcliente.model.Estar;
 import br.com.tads.estarcliente.model.Usuario;
 
 public class SplashActivity extends AppCompatActivity {
@@ -52,13 +53,21 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent();
+
+
+//                Regra de, se tiver um estar rodando, sempre manterá logado
                 Usuario user = new LocalDbImplement<Usuario>(SplashActivity.this).getDefault(Usuario.class);
                 if(user != null){
-                    if(user.isLogado())
-                         intent.setClass(SplashActivity.this, MainActivity.class);
-                    else{
-                        new LocalDbImplement<Usuario>(SplashActivity.this).clearObject(Usuario.class);
-                        intent.setClass(SplashActivity.this, LoginActivity.class);
+                    Estar estar = new LocalDbImplement<Estar>(SplashActivity.this).getDefault(Estar.class);
+                    if(estar!=null){
+                        intent.setClass(SplashActivity.this, TimeActivity.class);
+                    }else {
+                        if (user.isLogado())
+                            intent.setClass(SplashActivity.this, MainActivity.class);
+                        else {
+                            new LocalDbImplement<Usuario>(SplashActivity.this).clearObject(Usuario.class);
+                            intent.setClass(SplashActivity.this, LoginActivity.class);
+                        }
                     }
                 }else{
                     intent.setClass(SplashActivity.this, LoginActivity.class);
