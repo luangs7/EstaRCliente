@@ -93,7 +93,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
             ALARM = estar.getAlert();
             Log.e("values",String.valueOf(TIME)+ " / " +String.valueOf(ALARM) );
         }else{
-            finishAffinity();
+            finish();
         }
 
         super.onCreate(savedInstanceState);
@@ -206,6 +206,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnFim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new LocalDbImplement<Estar>(TimeActivity.this).clearObject(Estar.class);
                 TimerJobSchedulerService.finish();
                 startActivity(new Intent(getBaseContext(),MainActivity.class));
             }
@@ -215,13 +216,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnRenovar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(secondsLeft == 0){
-                    TIME = 1*60;
-                    countDown.start();
-                }
-                btnRenovar.setVisibility(View.INVISIBLE);
-                countDown.increaseBy(60);
-                TimerJobSchedulerService.addIncrease();
+
                 getdata(estar);
             }
         });
@@ -242,7 +237,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onDestroy() {
 
-        //mNotifyMgr.cancel(mNotificationId);
+        TimerJobSchedulerService.updNotification();
         super.onDestroy();
     }
 
@@ -318,6 +313,13 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                        TIME = 1*60;
 //                        countDown.start();
 //                    }
+                    if(secondsLeft == 0){
+                        TIME = 1*60;
+                        countDown.start();
+                    }
+                    btnRenovar.setVisibility(View.INVISIBLE);
+                    countDown.increaseBy(60);
+                    TimerJobSchedulerService.addIncrease();
 
                     Usuario usuario = new LocalDbImplement<Usuario>(TimeActivity.this).getDefault(Usuario.class);
                     new LocalDbImplement<Usuario>(TimeActivity.this).clearObject(Usuario.class);
