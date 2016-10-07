@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import br.com.tads.estarcliente.Fragment.Fragment1;
 import br.com.tads.estarcliente.Fragment.Fragment2;
 import br.com.tads.estarcliente.Fragment.Fragment3;
+import br.com.tads.estarcliente.Fragment.HistoricoFragment;
 
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -30,6 +31,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 Fragment3 tab3 = new Fragment3();
                 return tab3;
+            case 3:
+                HistoricoFragment tab4 = new HistoricoFragment();
+                return tab4;
             default:
                 return null;
         }

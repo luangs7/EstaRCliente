@@ -10,18 +10,59 @@ import java.io.Serializable;
  */
 public class Estar implements Serializable {
 
-    private String endereco;
-    private String placa;
-    private int horas;
+    private int alert;
     @SerializedName("idUser")
     @Expose
     private int idUser;
-    private Double latitude;
-    private Double longitude;
-    private int alert;
     @SerializedName("idEstar")
     @Expose
     private String id;
+    @SerializedName("placa")
+    @Expose
+    private String placa;
+    @SerializedName("inicio")
+    @Expose
+    private String inicio;
+    @SerializedName("horas")
+    @Expose
+    private int horas;
+    @SerializedName("alerta")
+    @Expose
+    private Object alerta;
+    @SerializedName("Usuario_id")
+    @Expose
+    private String usuarioId;
+    @SerializedName("valor")
+    @Expose
+    private Object valor;
+    @SerializedName("latitude")
+    @Expose
+    private Double latitude;
+    @SerializedName("longitude")
+    @Expose
+    private Double longitude;
+    @SerializedName("Endereco_idEndereco")
+    @Expose
+    private String enderecoIdEndereco;
+    @SerializedName("numero")
+    @Expose
+    private Object numero;
+    @SerializedName("address")
+    @Expose
+    private String endereco;
+    @SerializedName("situacao")
+    @Expose
+    private String situacao;
+    @SerializedName("diff")
+    @Expose
+    private String diff;
+    @SerializedName("days")
+    @Expose
+    private Integer days;
+    @SerializedName("hours")
+    @Expose
+    private Integer hours;
+
 
     public String getEndereco() {
         return endereco;
@@ -95,5 +136,85 @@ public class Estar implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(String inicio) {
+        this.inicio = inicio;
+    }
+
+    public Object getAlerta() {
+        return alerta;
+    }
+
+    public void setAlerta(Object alerta) {
+        this.alerta = alerta;
+    }
+
+    public String getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(String usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public Object getValor() {
+        return valor;
+    }
+
+    public void setValor(Object valor) {
+        this.valor = valor;
+    }
+
+    public String getEnderecoIdEndereco() {
+        return enderecoIdEndereco;
+    }
+
+    public void setEnderecoIdEndereco(String enderecoIdEndereco) {
+        this.enderecoIdEndereco = enderecoIdEndereco;
+    }
+
+    public Object getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Object numero) {
+        this.numero = numero;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
+    public String getDiff() {
+        return diff;
+    }
+
+    public void setDiff(String diff) {
+        this.diff = diff;
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
+    public Integer getHours() {
+        return hours;
+    }
+
+    public void setHours(Integer hours) {
+        this.hours = hours;
     }
 }

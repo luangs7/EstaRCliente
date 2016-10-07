@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import br.com.tads.estarcliente.R;
 import br.com.tads.estarcliente.TimeActivity;
@@ -49,53 +50,62 @@ public class TimerJobSchedulerService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         this.context = this;
-        timer = new LocalDbImplement<Timer>(context).getDefault(Timer.class);
 
-        try {
-            TIME = getDateDifference(timer.getDateFinish());
-            if(TIME < 0){
-                countDown = new CountDown(0);
-            }else {
-                countDown = new CountDown(TIME);
-            }
-            alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-            createNotification();
-            countDown.start();
+        Estar estar = new LocalDbImplement<Estar>(context).getDefault(Estar.class);
+        if(estar != null) {
 
 
-            //Cria e atribui um CountDownBehavior ao contador
-            countDown.setCountDownListener(new CountDownBehavior(ALARM, "mm:ss") {
-                @Override
-                public void onEnd() {
-                    mBuilder.mActions.clear();
-                    mBuilder.setOngoing(false);
-                    mBuilder.setContentText("Seu tempo acabou.");
-                    mNotifyMgr.notify(mNotificationId, mBuilder.build());
-                    stopSelf();
-                    //mNotifyMgr.cancel(mNotificationId);
+            timer = new LocalDbImplement<Timer>(context).getDefault(Timer.class);
+
+            try {
+                TIME = getDateDifference(timer.getDateFinish());
+                if (TIME < 0) {
+                    countDown = new CountDown(0);
+                } else {
+                    countDown = new CountDown(TIME);
                 }
+                alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                createNotification();
+                countDown.start();
 
-                @Override
-                protected void onAlarm() {
-                    alarmMethodwithCount();
-                }
 
-                @Override
-                protected void displayTimeLeft(String timeLeft) {
-                    timetoprint = timeLeft;
-                    mBuilder.setContentText(timeLeft + " restante");
-                    mNotifyMgr.notify(mNotificationId, mBuilder.build());
+                //Cria e atribui um CountDownBehavior ao contador
+                countDown.setCountDownListener(new CountDownBehavior(ALARM, "mm:ss") {
+                    @Override
+                    public void onEnd() {
+                        mBuilder.mActions.clear();
+                        mBuilder.setOngoing(false);
+                        mBuilder.setContentText("Seu tempo acabou.");
+                        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+                        stopSelf();
+                        //mNotifyMgr.cancel(mNotificationId);
+                    }
+
+                    @Override
+                    protected void onAlarm() {
+                        alarmMethodwithCount();
+                    }
+
+                    @Override
+                    protected void displayTimeLeft(String timeLeft) {
+                        timetoprint = timeLeft;
+                        mBuilder.setContentText(timeLeft + " restante");
+                        mNotifyMgr.notify(mNotificationId, mBuilder.build());
 //                    textView.setText(timeLeft);
-                }
-            });
+                    }
+                });
 
 
-            Log.e("active","active");
-            return true;
+                Log.e("active", "active");
+                return true;
 
-        }catch (Exception e){
-            String error = e.getMessage();
-            Log.e("error",error);
+            } catch (Exception e) {
+                String error = e.getMessage();
+                Log.e("error", error);
+                return false;
+            }
+        }else{
+            stopSelf();
             return false;
         }
 
@@ -163,6 +173,12 @@ public class TimerJobSchedulerService extends JobService {
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
 
+    public static void updNotification(){
+        mBuilder.setContentText("Seu período está ativo.");
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
+    }
+
 
     public static void addIncrease(){
        try {
@@ -191,7 +207,7 @@ public class TimerJobSchedulerService extends JobService {
     //    comparar o tempo que foi aberto a activity, com o tempo para finalizar o periodo
     public long getDateDifference(String finishDate) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH);
         String actualDate = dateFormat.format(Calendar.getInstance().getTime());
 
         try {

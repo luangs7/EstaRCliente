@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Principal"));
-        tabLayout.addTab(tabLayout.newTab().setText("Comprar créditos"));
-        tabLayout.addTab(tabLayout.newTab().setText("Cadastrar veículo"));
+        tabLayout.addTab(tabLayout.newTab().setText("Créditos"));
+        tabLayout.addTab(tabLayout.newTab().setText("Veículos"));
+        tabLayout.addTab(tabLayout.newTab().setText("Meu histórico"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);

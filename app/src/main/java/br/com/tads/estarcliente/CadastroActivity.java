@@ -1,8 +1,10 @@
 package br.com.tads.estarcliente;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,15 @@ public class CadastroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setTitle("Cadastrar");
+            toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+            toolbar.setNavigationIcon(R.drawable.ic_action_name);
+            setSupportActionBar(toolbar);
+        }
+
 
         editTextNome = (EditText) findViewById(R.id.editTextNome);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);

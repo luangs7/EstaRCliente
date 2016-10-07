@@ -72,22 +72,10 @@
             android:layout_height="wrap_content"
             android:text="Cadastrar"
             android:id="@+id/btnConfirma"
-            android:layout_alignTop="@+id/btnCancel"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="59dp"
-            android:layout_marginStart="59dp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancelar"
-            android:id="@+id/btnCancel"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/btnConfirma"
-            android:layout_toEndOf="@+id/btnConfirma"
-            android:layout_marginLeft="49dp"
-            android:layout_marginStart="49dp" />
+            android:layout_centerHorizontal="true" />
+
+
     </RelativeLayout>
 
 </LinearLayout>

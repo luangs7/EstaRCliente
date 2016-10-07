@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view"
+        android:elevation="3dp"
+        android:layout_gravity="center_horizontal" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Rua Doutor Alcídes Viêira Arco-Verde, 1225 - Jardim das Américas"
+            android:id="@+id/txtEndereco"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="AGO6688"
+            android:id="@+id/txtPlaca"
+            android:layout_toRightOf="@+id/textView4"
+            android:layout_toEndOf="@+id/textView4"
+            android:layout_alignBaseline="@+id/textView4"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/txtEndereco" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Minutos atrás"
+            android:id="@+id/txtTempo"
+            android:layout_below="@+id/txtEndereco"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="2 horas"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/txtPlaca"
+            android:layout_alignRight="@+id/txtPlaca"
+            android:layout_alignEnd="@+id/txtPlaca"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Tempo:"
+            android:id="@+id/textView3"
+            android:textSize="14sp"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignLeft="@+id/textView4"
+            android:layout_alignStart="@+id/textView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Placa:"
+            android:id="@+id/textView4"
+            android:textSize="14sp"
+            android:layout_alignTop="@+id/txtTempo"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/txtEndereco" />
+
+    </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
