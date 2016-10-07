@@ -8,5 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView2"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="15dp" />
+        android:layout_margin="15dp"
+        android:divider="@null"
+        android:dividerHeight="5dp"/>
 </LinearLayout>

@@ -58,7 +58,8 @@ public class HistoricoAdapter extends BaseAdapter {
     holder.txtPlaca.setText(object.getPlaca());
         if(Integer.parseInt(object.getDiff()) > 24){
             holder.txtTempo.setText( object.getDays() + " dias atras");
-        }if(Integer.parseInt(object.getDiff()) == 0 ){
+        }
+        else if(Integer.parseInt(object.getDiff()) == 0 ){
             holder.txtTempo.setText( " Alguns minutos atras");
         }
         else{

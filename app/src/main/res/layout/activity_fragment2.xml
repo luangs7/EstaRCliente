@@ -101,18 +101,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="30dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text=">"
-                android:id="@+id/textView12323"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/txt9ds"
-                android:layout_toEndOf="@+id/txt9ds"
-                android:layout_marginRight="40dp"
-                android:layout_marginLeft="40dp" />
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -154,17 +142,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text=">"
-                android:id="@+id/textView12"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/txt9"
-                android:layout_toEndOf="@+id/txt9"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp" />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -217,17 +195,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text=">"
-                    android:id="@+id/textView1242"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/txt9444"
-                    android:layout_toEndOf="@+id/txt9444"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp" />
+
 
                 <TextView
                     android:layout_width="wrap_content"

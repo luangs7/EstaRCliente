@@ -42,14 +42,7 @@ public class CadastroActivity extends AppCompatActivity {
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextSenha = (EditText) findViewById(R.id.editTextSenha);
         btnConfirma = (Button) findViewById(R.id.btnConfirma);
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         btnConfirma.setOnClickListener(new View.OnClickListener() {
             @Override
