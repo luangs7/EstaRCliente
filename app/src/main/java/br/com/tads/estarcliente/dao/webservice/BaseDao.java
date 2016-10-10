@@ -131,5 +131,16 @@ public class BaseDao extends GerenicAbstractDaoImp {
         CustomPostResquest request = new CustomPostResquest(EstarRequest.class, Request.Method.POST, url, map, callListener, callListener);
         addRequest(request);
     }
+
+    public void sendPush(CallListener callListener, String deviceid, String token, String firebaseToken){
+        String url = serverUrl + "setters/addPush.php?UserId=" + user.getId();
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("DeviceId",deviceid);
+        map.put("Token",firebaseToken);
+
+        CustomResquest request = new CustomResquest(BaseRequest.class, Request.Method.POST, url, map, callListener, callListener);
+        addRequest(request);
+    }
 }
 

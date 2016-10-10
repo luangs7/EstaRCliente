@@ -16,6 +16,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.net.InetAddress;
 
@@ -130,11 +133,15 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
+//        FirebaseApp.initializeApp(this,new FirebaseOptions.Builder().build());
 
         //lastupdate = Calendar.getInstance().getTime();
         //SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         //boolean run = sp.getBoolean(SincronizarIntentService.TAG, false);
         // initialize the singleton
+
+        FirebaseMessaging.getInstance().subscribeToTopic("general");
+
         sInstance = this;
     }
 
@@ -295,7 +302,7 @@ public class MyApplication extends Application {
             return txt.toString();
         }catch (Exception ex){
             Log.e("applicationColor",ex.getMessage());
-            return MyApplication.class.getPackage().getName().replace("br.com.devmaker.","");
+            return MyApplication.class.getPackage().getName().replace("br.com.tads.","");
         }
 
 

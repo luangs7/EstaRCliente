@@ -2,6 +2,8 @@ package br.com.tads.estarcliente;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +107,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             //mGoogleApiClient.connect();
             //signOut();
         }
+
+        sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
     }
 
@@ -219,6 +224,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         Intent intent = new Intent(getApplication(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        setpush();
                         finishAffinity();
                     }
                 }else{
@@ -234,6 +240,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
         new BaseDao(getBaseContext()).login(callListener,senha.getText().toString(),email.getText().toString());
+    }
+
+    SharedPreferences sp;
+    public void setpush(){
+        Intent servicegcm = new Intent(getBaseContext(),RegistrationIntentService.class);
+        startService(servicegcm);
+
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        CallListener<BaseRequest> callListener = new CallListener<BaseRequest>(getBaseContext(), null, null) {
+            @Override
+            public void onResponse(BaseRequest request) {
+                super.onResponse(request);
+                Log.e("onResponse", request.getResult());
+            }
+        };
+        new BaseDao(getBaseContext()).sendPush(callListener, sp.getString("deviceid", ""), sp.getString("token_push", ""), refreshedToken );
     }
 
 

@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "941025966805",
-    "project_id": "firebase-estarcliente"
+    "firebase_url": "https://fir-estarcliente.firebaseio.com",
+    "project_id": "firebase-estarcliente",
+    "storage_bucket": "firebase-estarcliente.appspot.com"
   },
   "client": [
     {
@@ -17,8 +19,12 @@
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.tads.estarcliente",
-            "certificate_hash": "17771A51FC2D83EABC19502275E9D976B20FBC18"
+            "certificate_hash": "BFFB3EB6DAB3499EEDD61FA97AC123DB73950152"
           }
+        },
+        {
+          "client_id": "941025966805-qla65f13fa45npkqooej9le15cevdhqm.apps.googleusercontent.com",
+          "client_type": 3
         },
         {
           "client_id": "941025966805-pofa5ddc6cas83oqa50th3rs992qg2or.apps.googleusercontent.com",
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941025966805-qla65f13fa45npkqooej9le15cevdhqm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
