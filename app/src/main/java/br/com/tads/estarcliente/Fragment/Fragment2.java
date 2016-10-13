@@ -96,7 +96,7 @@ public class Fragment2 extends Fragment {
 
     public void atualizaSaldo(){
         Usuario user = new LocalDbImplement<Usuario>(getContext()).getDefault(Usuario.class);
-        String txt = user.getSaldo() + " horas";
+        String txt = user.getSaldo() + " minuto(s)";
         saldo.setText(txt);
     }
 

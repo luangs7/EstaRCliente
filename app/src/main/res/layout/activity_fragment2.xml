@@ -24,14 +24,13 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="56dp"
-            android:layout_marginStart="56dp" />
+            android:layout_marginLeft="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="8 horas"
+            android:text="4 minuto(s)"
             android:id="@+id/txtSaldo"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
@@ -94,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="1 hora"
+                android:text="1 minuto"
                 android:id="@+id/txt9ds"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
@@ -134,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="5 horas"
+                android:text="5 minutos"
                 android:id="@+id/txt9"
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="33dp"
@@ -187,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="10 horas"
+                    android:text="10 minutos"
                     android:id="@+id/txt9444"
                     android:layout_marginLeft="40dp"
                     android:layout_marginStart="33dp"

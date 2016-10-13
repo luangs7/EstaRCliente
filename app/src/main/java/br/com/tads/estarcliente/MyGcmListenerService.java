@@ -54,7 +54,7 @@ public class MyGcmListenerService extends GcmListenerService {
                        .setContentIntent(pendingIntent)
                        //.setStyle(inboxStyle)
                        .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
-                       .setContentTitle(getResources().getString(R.string.app_name));
+                       .setContentTitle("EstaR");
 
 
                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -68,7 +68,7 @@ public class MyGcmListenerService extends GcmListenerService {
                        .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                        .setDefaults(Notification.DEFAULT_ALL)
                        .setContentIntent(pendingIntent)
-                       .setContentTitle(getResources().getString(R.string.app_name));
+                       .setContentTitle("EstaR");
 
 
                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

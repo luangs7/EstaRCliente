@@ -282,6 +282,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         Usuario usuario = request.getItens().get(0);
                         usuario.setLogado(true);
                         new LocalDbImplement<Usuario>(LoginActivity.this).save(usuario);
+                        setpush();
                         Intent intent = new Intent(getApplication(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
