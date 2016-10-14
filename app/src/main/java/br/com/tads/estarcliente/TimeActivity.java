@@ -53,6 +53,7 @@ import br.com.tads.estarcliente.dao.webservice.BaseDao;
 import br.com.tads.estarcliente.model.Estar;
 import br.com.tads.estarcliente.model.Timer;
 import br.com.tads.estarcliente.model.Usuario;
+import br.com.tads.estarcliente.model.request.BaseRequest;
 import br.com.tads.estarcliente.model.request.EstarRequest;
 
 public class TimeActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
@@ -206,9 +207,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnFim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LocalDbImplement<Estar>(TimeActivity.this).clearObject(Estar.class);
-                TimerJobSchedulerService.finish();
-                startActivity(new Intent(getBaseContext(),MainActivity.class));
+                setdata(estar);
             }
         });
 
@@ -342,6 +341,45 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         new BaseDao(getBaseContext()).addRenovar(callListener,estar);
+    }
+
+    public void setdata(final Estar estar){
+
+        OnDialogButtonClick onDialogButtonClick = new OnDialogButtonClick() {
+            @Override
+            public void onPositiveClick() {
+                setdata(estar);
+            }
+
+            @Override
+            public void onNegativeClick() {
+
+            }
+        };
+
+        CallListener<BaseRequest> callListener = new CallListener<BaseRequest>(this, "Buscando dados", onDialogButtonClick) {
+            @Override
+            public void onResponse(BaseRequest request) {
+                super.onResponse(request);
+                if (request.success()) {
+
+                  new LocalDbImplement<Estar>(TimeActivity.this).clearObject(Estar.class);
+                    TimerJobSchedulerService.finish();
+                    startActivity(new Intent(getBaseContext(),MainActivity.class));
+
+                }else{
+                    Toast.makeText(TimeActivity.this, request.getException(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                super.onErrorResponse(error);
+            }
+        };
+
+
+        new BaseDao(getBaseContext()).updStatus(callListener,estar);
     }
 
 

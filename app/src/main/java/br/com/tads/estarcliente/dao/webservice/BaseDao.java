@@ -142,5 +142,12 @@ public class BaseDao extends GerenicAbstractDaoImp {
         CustomResquest request = new CustomResquest(BaseRequest.class, Request.Method.POST, url, map, callListener, callListener);
         addRequest(request);
     }
+
+    public void updStatus(CallListener callListener, Estar estar){
+        String url = serverUrl + "setters/updStatus.php?id=" + estar.getId();
+
+        CustomResquest request = new CustomResquest(BaseRequest.class, Request.Method.GET, url, null, callListener, callListener);
+        addRequest(request);
+    }
 }
 

@@ -87,10 +87,10 @@ public class Estar implements Serializable {
     public void setHoras(int horas) {
         switch (horas){
             case 0:
-                this.horas = 1;
+                this.horas = 2;
                 break;
             case 1:
-                this.horas = 2;
+                this.horas = 3;
                 break;
             default:
                 this.horas = 0;
