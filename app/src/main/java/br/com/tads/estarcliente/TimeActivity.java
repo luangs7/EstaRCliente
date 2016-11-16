@@ -9,10 +9,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -37,12 +39,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import br.com.tads.estarcliente.alarm.CountDown;
 import br.com.tads.estarcliente.alarm.CountDownBehavior;
+import br.com.tads.estarcliente.alarm.MyServiceTempo;
 import br.com.tads.estarcliente.alarm.NotifyService;
 import br.com.tads.estarcliente.alarm.TimerJobSchedulerService;
 import br.com.tads.estarcliente.alarm.TimerService;
@@ -63,7 +67,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TextView textView;
     private CountDown countDown;
     private NotificationCompat.Builder mBuilder;
-    int mNotificationId = 001;
+    int mNotificationId = 002;
     private NotificationManager mNotifyMgr;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
@@ -114,16 +118,19 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         timer = new LocalDbImplement<Timer>(TimeActivity.this).getDefault(Timer.class);
 
-
         try {
-            if (estar.getHoras() == 2) {
+            if (estar.getHoras() == 3) {
                 btnRenovar.setVisibility(View.INVISIBLE);
             }
-            if(timer.getSecondsTofinish() > 160){
+            if(timer.getSecondsTofinish() == 180){
                 btnRenovar.setVisibility(View.INVISIBLE);
             }
         }catch (Exception e){
-            if(timer.getSecondsTofinish() > 160){
+            if (estar.getHoras() == 3) {
+                btnRenovar.setVisibility(View.INVISIBLE);
+            }
+
+            if(timer.getSecondsTofinish() >= 180){
                 btnRenovar.setVisibility(View.INVISIBLE);
             }
         }
@@ -142,19 +149,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // wrap your stuff in a componentName
-            ComponentName mServiceComponent = new ComponentName(this, TimerJobSchedulerService.class);
-            // set up conditions for the job
-            android.app.job.JobInfo.Builder builder = new android.app.job.JobInfo.Builder(1, mServiceComponent);
-
-            android.app.job.JobInfo task = builder.setRequiredNetworkType(android.app.job.JobInfo.NETWORK_TYPE_UNMETERED)
-                    .setOverrideDeadline(100)
-                    .setPersisted(true)
-                    .build();
-            // inform the system of the job
-            android.app.job.JobScheduler jobScheduler = (android.app.job.JobScheduler) this.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-            jobScheduler.schedule(task);
-
+            startService(new Intent(this, MyServiceTempo.class));
         }else{
             startService(new Intent(this, TimerService.class));
         }
@@ -175,9 +170,13 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onEnd() {
 //                mBuilder.mActions.clear();
-//                mBuilder.setOngoing(false);
-//                mBuilder.setContentText("Seu tempo acabou.");
-//                mNotifyMgr.notify(mNotificationId, mBuilder.build());
+
+                if(mBuilder != null) {
+                    mBuilder.setOngoing(false);
+                    mBuilder.setContentText("Seu tempo acabou.");
+                    mNotifyMgr.notify(mNotificationId, mBuilder.build());
+                    alarmMethodwithCount();
+                }
                 //mNotifyMgr.cancel(mNotificationId);
             }
 
@@ -188,8 +187,12 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             protected void displayTimeLeft(String timeLeft) {
-//                mBuilder.setContentText(timeLeft + " restante");
-//                mNotifyMgr.notify(mNotificationId, mBuilder.build());
+                Log.e("", "displaytime2");
+
+                if(mBuilder != null) {
+                    mBuilder.setContentText(timeLeft + " restante");
+                    mNotifyMgr.notify(mNotificationId, mBuilder.build());
+                }
                 textView.setText(timeLeft);
             }
         });
@@ -228,15 +231,16 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         btnRenovar.setVisibility(View.INVISIBLE);
         countDown.increaseBy(60);
-        TimerJobSchedulerService.addIncrease();
+        MyServiceTempo.addIncrease();
         getdata(estar);
     }
 
 
     @Override
     protected void onDestroy() {
-
-        TimerJobSchedulerService.updNotification();
+        mNotifyMgr =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mNotifyMgr.cancelAll();
         super.onDestroy();
     }
 
@@ -263,6 +267,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("EstaR")
+                        .setColor(Color.parseColor("#218328"))
 //                        .setContentText("1 minuto restante")
 //                        .addAction(android.R.drawable.btn_plus,"Renovar",pendingIntentYes)
 //                        .addAction(android.R.drawable.ic_menu_close_clear_cancel,"Cancelar",null)
@@ -277,6 +282,8 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Builds the notification and issues it.
 
         mBuilder.setContentIntent(resultPendingIntent);
+        mNotifyMgr.cancel(001);
+        mNotifyMgr.cancelAll();
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
 
@@ -307,6 +314,10 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(EstarRequest request) {
                 super.onResponse(request);
                 if (request.success()) {
+
+
+                    timer.setActived(true);
+
 //                    TIME = secondsLeft + (1*60);
 //                    if(secondsLeft == 0){
 //                        TIME = 1*60;
@@ -316,17 +327,29 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
                         TIME = 1*60;
                         countDown.start();
                     }
-                    btnRenovar.setVisibility(View.INVISIBLE);
-                    countDown.increaseBy(60);
-                    TimerJobSchedulerService.addIncrease();
 
                     Usuario usuario = new LocalDbImplement<Usuario>(TimeActivity.this).getDefault(Usuario.class);
                     new LocalDbImplement<Usuario>(TimeActivity.this).clearObject(Usuario.class);
+                    new LocalDbImplement<Estar>(TimeActivity.this).clearObject(Estar.class);
+                    new LocalDbImplement<Timer>(TimeActivity.this).clearObject(Timer.class);
+                    timer.increase();
                     usuario.setSaldo(usuario.getSaldo(),1);
+                    estar.setRenovado(true);
                     new LocalDbImplement<Usuario>(getBaseContext()).save(usuario);
+                    new LocalDbImplement<Estar>(getBaseContext()).save(estar);
+                    new LocalDbImplement<Timer>(getBaseContext()).save(timer);
 
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(TimeActivity.this);
+                    prefs.edit().putBoolean("renovado", true).apply();
+
+                    btnRenovar.setVisibility(View.INVISIBLE);
+                    countDown.increaseBy(60);
+
+//                    stopService(new Intent(getBaseContext(), MyServiceTempo.class));
+                    //startService(new Intent(getBaseContext(), MyServiceTempo.class));
+
+                   // MyServiceTempo.createService(TimeActivity.this);
                     Toast.makeText(TimeActivity.this,"Renovado com sucesso.", Toast.LENGTH_SHORT).show();
-
 
                 }else{
                     Toast.makeText(TimeActivity.this, request.getException(), Toast.LENGTH_SHORT).show();
@@ -364,7 +387,7 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (request.success()) {
 
                   new LocalDbImplement<Estar>(TimeActivity.this).clearObject(Estar.class);
-                    TimerJobSchedulerService.finish();
+//                    stopService(new Intent(getBaseContext(), MyServiceTempo.class));
                     startActivity(new Intent(getBaseContext(),MainActivity.class));
 
                 }else{
@@ -453,6 +476,8 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+
+
     public long getDateDifference(String finishDate) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -490,5 +515,27 @@ public class TimeActivity extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
             return 0;
         }
+    }
+
+
+    private  void alarmMethodwithCount(){
+        Intent myIntent = new Intent(this , NotifyService.class);
+        pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Date data = new Date();
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(data);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        else
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        // Toast.makeText(context, "Start Alarm2", Toast.LENGTH_LONG).show();
     }
 }

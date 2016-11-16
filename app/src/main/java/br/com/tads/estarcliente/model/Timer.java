@@ -15,12 +15,13 @@ public class Timer {
     String dateFinish;
     long secondsTofinish;
     int timeEstar;
-
+    boolean actived;
 
 
     public Timer(String dateActived) {
         this.dateActived = dateActived;
         getDateDifference(dateActived);
+        this.actived = true;
         //setMillisAlert(dateActived);
     }
 
@@ -28,6 +29,8 @@ public class Timer {
         this.timeEstar = timeEstar;
         this.dateActived = dateActived;
         getDateDifference(dateActived);
+        this.actived = true;
+
     }
 
     public int getTimeEstar() {
@@ -68,10 +71,10 @@ public class Timer {
         Calendar calendar = Calendar.getInstance();
 
         switch (this.timeEstar){
-            case 1:
+            case 2:
                 calendar.add(Calendar.MINUTE,2);
                 break;
-            case 2:
+            case 3:
                 calendar.add(Calendar.MINUTE,3);
                 break;
         }
@@ -139,4 +142,11 @@ public class Timer {
      }
     }
 
+    public boolean isActived() {
+        return actived;
+    }
+
+    public void setActived(boolean actived) {
+        this.actived = actived;
+    }
 }

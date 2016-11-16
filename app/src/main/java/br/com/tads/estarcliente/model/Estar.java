@@ -62,7 +62,15 @@ public class Estar implements Serializable {
     @SerializedName("hours")
     @Expose
     private Integer hours;
+    private boolean renovado;
 
+    public boolean isRenovado() {
+        return renovado;
+    }
+
+    public void setRenovado(boolean renovado) {
+        this.renovado = renovado;
+    }
 
     public String getEndereco() {
         return endereco;

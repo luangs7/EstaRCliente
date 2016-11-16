@@ -1,5 +1,6 @@
 package br.com.tads.estarcliente;
 
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import br.com.tads.estarcliente.adapter.PagerAdapter;
+import br.com.tads.estarcliente.alarm.MyServiceTempo;
 import br.com.tads.estarcliente.dao.local.LocalDbImplement;
 import br.com.tads.estarcliente.model.Usuario;
 
@@ -26,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Gets an instance of the NotificationManager service
+        NotificationManager mNotifyMgr =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        mNotifyMgr.cancelAll();
+        stopService(new Intent(getBaseContext(), MyServiceTempo.class));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

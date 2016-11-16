@@ -47,7 +47,13 @@ public class CadastroActivity extends AppCompatActivity {
         btnConfirma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getdata();
+                if(editTextNome.getText().length() > 0 &&
+                        editTextEmail.getText().length() > 0 &&
+                            editTextSenha.getText().length() > 0) {
+                    getdata();
+                }else{
+                    Toast.makeText(CadastroActivity.this, "Todos os campos são obrigatórios!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

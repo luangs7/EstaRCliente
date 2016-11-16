@@ -67,7 +67,7 @@ public class TimerJobSchedulerService extends JobService {
                 alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
                 createNotification();
                 countDown.start();
-
+                alarmAgendado();
 
                 //Cria e atribui um CountDownBehavior ao contador
                 countDown.setCountDownListener(new CountDownBehavior(ALARM, "mm:ss") {
@@ -119,6 +119,30 @@ public class TimerJobSchedulerService extends JobService {
         return true;
     }
 
+
+    private static void alarmAgendado(){
+
+        long time = secondsLeft/60;
+
+        Intent myIntent = new Intent(context , NotifyService.class);
+        pendingIntent = PendingIntent.getService(context, 0, myIntent, 0);
+
+        Date data = new Date();
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(data);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time*1000, pendingIntent);
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, time*1000, pendingIntent);
+        else
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time*1000, pendingIntent);
+
+    //    Toast.makeText(context, "Start Alarm2", Toast.LENGTH_LONG).show();
+    }
+
     private static void alarmMethodwithCount(){
         Intent myIntent = new Intent(context , NotifyService.class);
         pendingIntent = PendingIntent.getService(context, 0, myIntent, 0);
@@ -136,7 +160,7 @@ public class TimerJobSchedulerService extends JobService {
         else
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
-        Toast.makeText(context, "Start Alarm2", Toast.LENGTH_LONG).show();
+       // Toast.makeText(context, "Start Alarm2", Toast.LENGTH_LONG).show();
     }
 
     public void createNotification(){
@@ -182,21 +206,22 @@ public class TimerJobSchedulerService extends JobService {
 
     public static void addIncrease(){
        try {
-           mNotifyMgr.cancelAll();
+
            if (secondsLeft == 0) {
+               mNotifyMgr.cancelAll();
                TIME = 1 * 60;
                countDown.start();
            } else {
-               secondsLeft = secondsLeft + countDown.increaseBy(60);
+               countDown.increaseBy(60);
            }
        }catch (Exception e){
-
+           countDown.increaseBy(60);
        }
 
         new LocalDbImplement<Timer>(context).clearObject(Timer.class);
 
         timer.increase();
-
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());
         new LocalDbImplement<Timer>(context).save(timer);
     }
 

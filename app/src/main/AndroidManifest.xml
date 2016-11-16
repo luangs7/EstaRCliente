@@ -85,7 +85,12 @@
 
 
         <activity android:name=".TimeActivity"></activity>
+        <service
+            android:name=".alarm.MyServiceTempo"
+        android:enabled="true"
+        android:exported="true"
 
+            />
 
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -100,24 +105,11 @@
         </receiver>
 
         <service
-            android:name=".MyGcmListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-        <service
             android:name=".RegistrationIntentService"
             android:exported="false" />
 
-        <!-- [START firebase_service] -->
+        <!-- [START firebase_service]
+               android:process=":my_service" -->
         <service
             android:name=".MyFirebaseMessagingService">
             <intent-filter>

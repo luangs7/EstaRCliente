@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="30dp"
+    android:paddingLeft="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Redefinir senha"
+        android:id="@+id/textView21"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:fontFamily="Roboto-Medium"
+
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Informe seu e-mail que enviaremos um link para a redefinição de senha. Por favor verifique seu e-mail"
+        android:id="@+id/textView20"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:fontFamily="Roboto-Medium"
+
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:hint="Email"
+            android:textSize="14sp"
+            android:fontFamily="Roboto-Regular"
+            android:textColorHint="#000"
+            android:id="@+id/email"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="SALVAR"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:id="@+id/btnSalvar"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp" />
+    </LinearLayout>
+
+</LinearLayout>

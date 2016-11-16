@@ -58,7 +58,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
 
                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-               nm.notify(9999, builder.build());
+             //  nm.notify(9999, builder.build());
 
            }else{
                final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -72,7 +72,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
 
                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-               nm.notify(9999, builder.build());
+              // nm.notify(9999, builder.build());
            }
        }
     }

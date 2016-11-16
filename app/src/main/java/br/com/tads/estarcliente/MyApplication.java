@@ -140,7 +140,11 @@ public class MyApplication extends Application {
         //boolean run = sp.getBoolean(SincronizarIntentService.TAG, false);
         // initialize the singleton
 
-        FirebaseMessaging.getInstance().subscribeToTopic("general");
+        try{
+            FirebaseMessaging.getInstance().subscribeToTopic("general");
+        }catch (Exception e){
+
+        }
 
         sInstance = this;
     }

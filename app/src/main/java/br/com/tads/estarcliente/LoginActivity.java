@@ -1,18 +1,23 @@
 package br.com.tads.estarcliente;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,9 +32,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import br.com.tads.estarcliente.dao.local.LocalDbImplement;
 import br.com.tads.estarcliente.dao.voley.CallListener;
@@ -52,11 +54,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     CheckBox checklogin;
     String token;
     GoogleSignInAccount acct;
+    private android.widget.ImageView imageView;
+    private android.support.v7.widget.CardView cardview;
+    private TextView esquecisenha;
+    private CheckBox checkLogado;
+    private SignInButton signinbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+;
        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         SignInButton button = (SignInButton) findViewById(R.id.sign_in_button);
@@ -66,13 +75,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         buttonCadastro = (Button) findViewById(R.id.buttonCadastro);
         checklogin = (CheckBox) findViewById(R.id.checkLogado);
         setGooglePlusButtonText(button, "Login com Google");
+        this.esquecisenha = (TextView) findViewById(R.id.esquecisenha);
 
 
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getdata();
+                if(email.getText().length() > 0 && senha.getText().length() > 0) {
+                    getdata();
+                }else{
+                    Toast.makeText(LoginActivity.this, "Todos os campos são obrigatórios!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -107,6 +121,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             //mGoogleApiClient.connect();
             //signOut();
         }
+
+        esquecisenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recupera();
+            }
+        });
 
         sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
@@ -309,5 +330,36 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onBackPressed();
     }
 
+
+    public void recupera() {
+
+
+        final Dialog dialog = new Dialog(LoginActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_recupera);
+
+        dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        TextView btnSalvar = (TextView) dialog.findViewById(R.id.btnSalvar);
+        final EditText email = (EditText) dialog.findViewById(R.id.email);
+
+        dialog.show();
+
+
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (email.getText().length() > 0) {
+                    Toast.makeText(LoginActivity.this, "Email de recuperação enviado!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    // resetSenha(email.getText().toString());
+                } else {
+                    Toast.makeText(LoginActivity.this, "Informe e-mail", Toast.LENGTH_SHORT).show();
+                  //  dialog.dismiss();
+                }
+            }
+        });
+
+    }
 
 }

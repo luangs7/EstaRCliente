@@ -30,6 +30,18 @@ public class CountDown {
     private static final long ONE_SECOND = 1000;
     private static final int MSG = 1;
 
+    public CountDown() {
+        handler = new CountDownHandler(this);
+    }
+
+    public long getFromSeconds() {
+        return fromSeconds;
+    }
+
+    public void setFromSeconds(long fromSeconds) {
+        this.fromSeconds = fromSeconds;
+    }
+
     //Constrói o contador com o valor inicial de segundos.
     public CountDown(long fromSeconds){
 
